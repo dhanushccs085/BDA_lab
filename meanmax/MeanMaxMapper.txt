@@ -1,0 +1,23 @@
+package cgpa;
+
+import java.io.IOException;
+import org.apache.hadoop.io.DoubleWritable;
+import org.apache.hadoop.io.Text;
+import org.apache.hadoop.mapreduce.Mapper;
+
+public class CGPAMapper extends Mapper<Object, Text, Text, DoubleWritable> {
+
+    public void map(Object key, Text value, Context context) throws IOException, InterruptedException {
+        // Split line into tokens (even if just 1 value)
+        String[] tokens = value.toString().split("[,\\s]+"); // Split by comma or whitespace
+        for (String token : tokens) {
+            try {
+                double cgpa = Double.parseDouble(token.trim());
+                context.write(new Text("CGPA_MEAN"), new DoubleWritable(cgpa));
+                context.write(new Text("CGPA_MAX"), new DoubleWritable(cgpa));
+            } catch (NumberFormatException e) {
+                // Skip invalid numbers
+            }
+        }
+    }
+}

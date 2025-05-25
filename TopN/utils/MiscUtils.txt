@@ -1,0 +1,22 @@
+package utils;
+
+import org.apache.hadoop.io.IntWritable;
+import org.apache.hadoop.io.Text;
+
+import java.util.*;
+
+public class MiscUtils {
+    public static Map<Text, IntWritable> sortByValues(Map<Text, IntWritable> map) {
+        List<Map.Entry<Text, IntWritable>> list = new LinkedList<>(map.entrySet());
+
+        // Sort descending by value
+        list.sort((e1, e2) -> Integer.compare(e2.getValue().get(), e1.getValue().get()));
+
+        Map<Text, IntWritable> sortedMap = new LinkedHashMap<>();
+        for (Map.Entry<Text, IntWritable> entry : list) {
+            sortedMap.put(entry.getKey(), entry.getValue());
+        }
+
+        return sortedMap;
+    }
+}
