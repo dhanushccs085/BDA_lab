@@ -1,0 +1,16 @@
+Perform the following DB operations using Cassandra. 
+a )Create a keyspace by name Employee 
+b) Create a column family by name 
+           Employee-Info with attributes 
+           Emp_Id Primary Key, Emp_Name, 
+           Designation, Date_of_Joining, Salary,Dept_Name 
+c) Insert the values into the table in batch 
+d) Update Employee name and Department of Emp-Id 
+121 
+e) Sort the details of Employee records based on salary 
+f ) Alter the schema of the table Employee_Info to add a 
+column  Projects which stores a set of Projects done by 
+the corresponding Employee. 
+g) Update the altered table to add project names. 
+h) Create a TTL of 15 seconds to display the values of 
+Employees. 

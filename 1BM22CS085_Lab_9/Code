@@ -1,0 +1,32 @@
+import org.apache.spark.sql.SparkSession
+
+object FilterWordCount {
+  def main(args: Array[String]): Unit = {
+    if (args.length < 1) {
+      System.err.println("Usage: FilterWordCount <file>")
+      System.exit(1)
+    }
+
+    // Create a SparkSession, which internally manages the SparkContext
+    val spark = SparkSession.builder()
+      .appName("FilterWordCount")
+      .master("local[*]")  // Use local[*] for running on local machine with multiple cores
+      .getOrCreate()
+
+    // Use the SparkSession's SparkContext to read the file
+    val rdd = spark.sparkContext.textFile(args(0))
+
+    val counts = rdd
+      .flatMap(_.split("\\s+"))
+      .map(_.replaceAll("""[\p{Punct}]""", ""))
+      .filter(_.nonEmpty)
+      .map(w => (w.toLowerCase, 1))
+      .reduceByKey(_ + _)
+      .filter(_._2 > 4)
+
+    counts.collect().foreach{ case (w, c) => println(s"$w -> $c") }
+
+    // Stop the SparkSession when done
+    spark.stop()
+  }
+}

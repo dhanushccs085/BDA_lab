@@ -1,0 +1,5 @@
+Write a simple streaming program in Spark to receive text 
+data streams on a particular port, perform basic text 
+cleaning (like white space removal, stop words removal, 
+lemmatization, etc.), and print the cleaned text on the 
+screen. (Open Ended Question). 
